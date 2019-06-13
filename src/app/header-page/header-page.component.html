@@ -1,0 +1,191 @@
+
+
+
+
+
+  <div class="row">
+    <div class="col-2">
+        <div class="center">
+            <button type="button" class="btn btn-outline-primary" (click)="open(content)">Thêm</button>
+        
+          </div>
+        
+
+            <ul>
+      
+          <ng-container *ngFor="let i of Class">
+              <li style="margin-top:5px;list-style: none;">
+              <button type="button" class="btn btn-danger btn-sm" (click)="btn_details(i.id_class)">{{i.class_name}}</button>
+             
+            </li>
+            </ng-container>
+ 
+ 
+            </ul>
+
+    </div>
+    <div class="col-10">
+   
+        <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">Thứ</th>
+                  <th scope="col">Môn học</th>
+                  <th scope="col">Thao tác
+                      <button type="button" class="btn btn-outline-primary mr-5" (click)="open_add(content_add)">Thêm</button>
+                  </th>
+                </tr>
+              </thead>
+          <tbody>
+  
+              <ng-container *ngFor="let i of timetable" >
+                <tr>
+                  <th scope="row">{{i.day_name}}</th>
+                  <td>{{i.content}}</td>
+                  <td>
+                      <button type="button" class="btn btn-warning mr-5" (click)="open_edit(content_edit,i.id_day,i.content)">Sửa</button>
+                      <button type="button" class="btn btn-dark mr-5" (click)="open_delete(content_delete,i.id_class,i.id_day)">Xóa</button>
+                          
+                  </td>
+                </tr>
+          </ng-container>
+          </tbody>
+        </table>
+  
+
+
+
+
+      
+    </div>
+  </div>
+
+  <div class="container" >
+      
+  </div>
+
+
+
+  
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" >Thêm lớp</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      
+      <form>
+        <div class="form-group">
+  
+          <label for="exampleInputEmail1">Tên lớp</label>
+          <div class="input-group">
+              <input type="text" class="form-control" 
+              placeholder="Nhập tên lớp"
+               aria-describedby="emailHelp" required
+              [(ngModel)]="class_name"
+              name="first">
+          </div>
+        </div>
+      </form>
+      
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Hủy</button>
+      <button type="button" class="btn btn-outline-dark btn-primary text-white" (click)="btn_open_save()">Lưu</button>
+    </div>
+  </ng-template>
+
+  <ng-template #content_add let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" >Thứ</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form>
+          <div class="form-group">
+
+              <select  class="form-control" [(ngModel)]="thu" #ctrl="ngModel" required
+                [ngModelOptions]="{name: 'm.id_mon'}">
+                <option selected>Thứ</option>
+                <ng-container *ngFor="let i of day">
+                  <option>
+                    {{i.id_day}}.{{i.day_name}}
+                  </option>
+                </ng-container>
+              </select>
+
+<br>
+            <label for="exampleInputEmail1">Môn</label>
+            <div class="input-group">
+                <input type="text" class="form-control" 
+                placeholder="Nhập môn"
+                 aria-describedby="emailHelp" required
+                [(ngModel)]="content_timeTable.content"
+                name="first">
+            </div>
+          </div>
+        </form>
+        
+      </div>
+  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Hủy</button>
+        <button type="button" class="btn btn-outline-dark btn-primary text-white" (click)="btn_open_add()">Lưu</button>
+      </div>
+    </ng-template>
+
+    <ng-template #content_edit let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title" >Sửa</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+          <form>
+            <div class="form-group">
+
+              <label for="exampleInputEmail1">Môn</label>
+              <div class="input-group">
+                  <input type="text" class="form-control" 
+                  placeholder="Nhập môn"
+                   aria-describedby="emailHelp" required
+                  [(ngModel)]="content_timeTable.content"
+                  name="first">
+              </div>
+            </div>
+          </form>
+          
+        </div>
+    
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Hủy</button>
+          <button type="button" class="btn btn-outline-dark btn-primary text-white" (click)="btn_open_edit()">Lưu</button>
+        </div>
+      </ng-template>
+  
+
+      <ng-template #content_delete let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title" >Xóa</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+         
+          </div>
+      
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Hủy</button>
+            <button type="button" class="btn btn-outline-dark btn-primary text-white" (click)="btn_open_delete()">Đồng ý</button>
+          </div>
+        </ng-template>
+    
